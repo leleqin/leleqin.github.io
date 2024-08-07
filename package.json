@@ -1,5 +1,5 @@
 {
-  "name": "vite-project",
+  "name": "leleqin.github.io",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,10 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.4.31"
+    "vue": "^3.4.31",
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
+    "@types/node": "^22.0.0",
     "@vitejs/plugin-vue": "^5.0.5",
+    "sass": "^1.77.8",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",
     "vue-tsc": "^2.0.24"
