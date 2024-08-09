@@ -1,5 +1,7 @@
 # 项目创建
 
+[TOC]
+
 ## 创建初始项目
 
 [Vite 官网](https://cn.vitejs.dev/guide/)
@@ -67,14 +69,14 @@ Windows 下在文件夹下使用 `tree /f >tree.txt` 生成目录树，在 `tree
 // vite.config.ts
 export default defineConfig({
   plugins: [vue()],
-  base: "/",
+  base: '/',
   resolve: {
     //设置别名
     alias: {
-      "@": path.resolve(__dirname, "src"),
+      '@': path.resolve(__dirname, 'src'),
     },
   },
-});
+})
 ```
 
 此时会报错 **找不到模块“path”或其相应的类型声明**。这是因为我们的配置文件是 ts 类型。我们只需要安装 Node.js 类型检查包就好。
@@ -134,11 +136,122 @@ ts 无法识别 vue 文件
 在 `vite-env.d.ts` 文件中添加
 
 ```ts
-declare module "*.vue" {
-  import type { DefineComponent } from "vue";
-  const component: DefineComponent<{}, {}, any>;
-  export default component;
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
 }
 ```
 
 如果添加保存完后还报错，重新启动 vscode 即可。
+
+#### 4. 配置 eslint 限制代码的合法性和风格，对代码进行规范
+
+这里使用的是 vue 官方文档推荐的 `eslint-plugin-vue`
+
+```
+npm install -D eslint eslint-plugin-vue
+```
+
+通过 `npx eslint --init` 根据流程创建默认的 `eslint.config.js` 文件。
+
+```text
+
+√ How would you like to use ESLint? · problems
+√ What type of modules does your project use? · esm
+√ Which framework does your project use? · vue
+√ Does your project use TypeScript? · typescript
+√ Where does your code run? · browser
+The config that you've selected requires the following dependencies:
+
+eslint@9.x, globals, @eslint/js, typescript-eslint, eslint-plugin-vue
+√ Would you like to install them now? · No / Yes
+√ Which package manager do you want to use? · npm
+```
+
+- `vue-eslint-parser` 解析 `.vue` 文件。
+- `@typescript-eslint/parser` 解析 `.ts` 文件
+- `eslint-plugin-prettier` 将 Prettier 代码格式化工具与 ESLint 静态代码分析工具结合起来使用。确保 ESLint 规则与 Prettier 的规则不会发生冲突。
+- `eslint-config-prettier` 禁用 ESLint 中与 Prettier 冲突的规则
+- `eslint-plugin-import` 规范模块导入规则。
+- `eslint-define-config` 使用更灵活的方式配置 ESLint。
+- `@typescript-eslint/eslint-plugin` 提供针对 TypeScript 代码的 lint 规则。
+- `eslint-plugin-unused-imports` 检测和报告未使用的导入语句。
+
+#### 5. 集成 Prettier 格式化代码风格
+
+[Prettier](https://www.prettier.cn/docs/install.html)
+
+开发依赖安装 prettier
+
+```
+npm i prettier -D
+```
+
+创建 `.prettierrc.cjs` 文件，配置 Prettier
+
+```
+node --eval "fs.writeFileSync('.prettierrc','{}\n')"
+```
+
+创建 `.prettierignore` 配置哪些文件不格式化
+
+```
+node --eval "fs.writeFileSync('.prettierignore','{}\n')"
+```
+
+配置完成后如果 VSCode 右下角 Prettier 报红, 尝试重启 VSCode 修复
+
+**上面的配置只能保证 Prettier 和 ESLint 没有冲突报错。一般会在 Prettier 中统一代码风格; ESLint 保证代码质量。**
+
+#### 6. 集成 husky 和 lint-staged
+
+在代码提交前进行代码质量检查和格式化，以确保代码的一致性和可维护性。
+
+## 项目技术栈引用
+
+### `vue-router`
+
+这里遇到一个小问题，记录一下
+
+#### 问题描述
+
+当 history 使用 `createWebHistory()` 部署到 Github Pages 上，刷新/跳转页面，会出现 404 的报错
+
+```ts
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+})
+```
+
+#### 问题原因
+
+项目打包好，是通过 `dist/index.html` 文件展示静态页面，因为 Vue 是单页面应用 (SPA)。只有一个index.html作为入口文件，其它的路由都是通过JS来进行跳转。
+
+当使用 `createWebHistory()` 配置路由时，刷新页面，GitHub Pages 默认只能够处理根路径下的静态文件，这会导致页面刷新时无法找到正确的路由文件。
+
+#### 修改方式
+
+如果是服务端项目，配置了 Nginx 可以通过匹配 URL 请求进行页面返回。
+
+这里暂时不配置服务端，所以 history 采用 Hash 模式
+
+**为什么hash模式下没有问题**
+
+router Hash 模式是用符号#表示的，如 website.com/#/login, Hash 的值为 #/login
+
+它的特点在于：Hash 虽然出现在 URL 中，但不会被包括在 HTTP 请求中，对服务端完全没有影响，因此改变 Hash 不会重新加载页面
+
+Hash 模式下，仅 Hash 符号之前的内容会被包含在请求中，如 website.com/#/login 只有 website.com 会被包含在请求中 ，因此对于服务端来说，即使没有配置location，也不会返回404错误。
+
+```ts
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes,
+})
+```
+
+[参考文章](https://blog.csdn.net/qq_52354698/article/details/132449593)
+
+### 从 npm 切换到 pnpm
