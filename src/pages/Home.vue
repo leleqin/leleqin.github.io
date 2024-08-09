@@ -13,45 +13,45 @@
 </template>
 
 <script lang="ts" setup>
-  import { WaterDrop } from '@/components'
-  defineOptions({
-    name: 'HomePage',
-  })
+import { WaterDrop } from "@/components";
+defineOptions({
+  name: "HomePage",
+});
 </script>
 
 <style lang="scss" scoped>
-  .home {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
+.home {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
 
-    .left-content {
-      width: 50%;
+  .left-content {
+    width: 50%;
 
-      .title {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        img {
-          width: 88px;
-          height: 88px;
-        }
+    .title {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 88px;
+        height: 88px;
+      }
 
-        p {
-          font-size: 60px;
-          font-weight: bold;
-          color: white;
-        }
+      p {
+        font-size: 60px;
+        font-weight: bold;
+        color: white;
       }
     }
-
-    .right-content {
-      flex: 1;
-    }
   }
+
+  .right-content {
+    flex: 1;
+  }
+}
 </style>

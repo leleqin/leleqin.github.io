@@ -8,6 +8,6 @@
 </template>
 
 <style lang="scss">
-  @import './assets/styles/index';
-  @import './assets/styles/main';
+@import "./assets/styles/index";
+@import "./assets/styles/main";
 </style>
