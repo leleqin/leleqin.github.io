@@ -9,7 +9,19 @@
     "preview": "vite preview",
     "lint": "npm lint:eslint && npm lint:prettier && npm lint:stylelint",
     "lint:eslint": "eslint --cache --max-warnings 0  \"{src,mocks}/**/*.{vue,ts,tsx}\" --fix",
-    "lint:prettier": "prettier --write  \"src/**/*.{js,json,tsx,css,less,scss,vue,html,md}\""
+    "lint:prettier": "prettier --write  \"src/**/*.{js,json,tsx,css,less,scss,vue,html,md}\"",
+    "lint:lint-staged": "lint-staged"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,js,jsx,tsx,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "vue": "^3.4.31",
@@ -29,8 +41,11 @@
     "eslint-plugin-unused-imports": "^4.1.2",
     "eslint-plugin-vue": "^9.27.0",
     "globals": "^15.9.0",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.9",
     "prettier": "^3.3.3",
     "sass": "^1.77.8",
+    "stylelint": "^16.8.2",
     "typescript": "^5.2.2",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.3.4",

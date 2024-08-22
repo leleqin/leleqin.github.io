@@ -204,11 +204,57 @@ node --eval "fs.writeFileSync('.prettierignore','{}\n')"
 
 **上面的配置只能保证 Prettier 和 ESLint 没有冲突报错。一般会在 Prettier 中统一代码风格; ESLint 保证代码质量。**
 
-#### 6. 集成 husky 和 lint-staged
+#### 6. 集成 stylelint
+
+检测 CSS、Sass、Less 等样式表语言中的潜在错误和不符合约定的地方，并提供修复建议。
+
+- 开发依赖安装 stylelint
+
+```
+npm i stylelint -D
+```
+
+- 创建配置文件 `.stylelintrc` 在项目根目录下
+
+```
+node --eval "fs.writeFileSync('.stylelintrc','{}\n')"
+```
+
+#### 7. 集成 husky 和 lint-staged
 
 在代码提交前进行代码质量检查和格式化，以确保代码的一致性和可维护性。
 
-## 项目技术栈引用
+**husky**
+
+husky 的作用是通过 Git 钩子，在 Git 操作的不同阶段运行自定义脚本。在代码提交前运行脚本，如运行代码风格检查工具（如 ESLint 或 Prettier）或运行单元测试等。以达到团队代码规范标准的提交。
+
+**lint-staged**
+
+lint-staged 的作用是在代码提交前对即将提交的文件进行静态代码分析。在代码提交前自动运行代码检查和格式化工具。从而减少代码质量问题和风格不一致的情况。
+
+1. 安装
+
+```
+npm i husky lint-staged -D
+```
+
+2. 生成对应的配置文件
+
+- `husky`
+
+```
+npx husky install
+```
+
+- `lint-staged`
+
+  - 创建配置文件 `.lintstagedrc` 在项目根目录下
+
+  ```
+  node --eval "fs.writeFileSync('.lintstagedrc','{}\n')"
+  ```
+
+## 项目库引用
 
 ### `vue-router`
 
