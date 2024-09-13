@@ -1,20 +1,26 @@
-<template>
-  <div class="water">
-    <slot></slot>
-  </div>
-</template>
-
 <script lang="ts" setup>
   defineOptions({
     name: 'WaterDrop',
   })
+
+  defineProps({
+    waterStyle: {
+      type: Object,
+    },
+    isExtra: Boolean,
+  })
 </script>
+
+<template>
+  <div class="water" :style="waterStyle">
+    <slot></slot>
+  </div>
+</template>
 
 <style lang="scss" scoped>
   .water {
     width: 200px;
     height: 200px;
-    margin: 100px 50px;
     border-radius: 61% 39% 57% 43% / 46% 67% 33% 54%;
     box-shadow:
       inset 10px 20px 30px rgba(0, 0, 0, 0.5),
