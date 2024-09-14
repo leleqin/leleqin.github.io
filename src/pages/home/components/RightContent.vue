@@ -1,13 +1,20 @@
 <script lang="ts" setup>
   import { Card } from '@/components'
+  import { useRouter } from 'vue-router'
   defineOptions({
     name: 'HomeRightContent',
   })
+
+  const router = useRouter()
+
+  const goToAbout = () => {
+    router.push({ name: 'About' })
+  }
 </script>
 
 <template>
   <div class="content">
-    <Card class="card-1" />
+    <Card class="card-1" @click="goToAbout"> About </Card>
     <Card class="card-2" />
     <Card class="card-3" />
     <Card class="card-4" />
