@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import { WaterDrop } from '@/components'
+  import RightContent from './components/RightContent.vue'
   defineOptions({
     name: 'HomePage',
   })
@@ -23,7 +24,7 @@
         </Card>
       </div> -->
     </div>
-    <div class="right-content"></div>
+    <RightContent />
   </div>
 </template>
 

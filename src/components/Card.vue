@@ -5,18 +5,18 @@
   defineProps({
     boxWidth: {
       type: Number,
-      default: 200,
+      // default: 200,
     },
     boxHeight: {
       type: Number,
-      default: 100,
+      // default: 100,
     },
     isExtra: Boolean,
   })
 </script>
 
 <template>
-  <div class="card" :style="{ width: `${boxWidth}px`, height: `${boxHeight}px` }">
+  <div class="card" :style="{ width: boxWidth ? `${boxWidth}px` : 'auto', height: boxHeight ? `${boxHeight}px` : 'auto' }">
     <slot></slot>
   </div>
 </template>
