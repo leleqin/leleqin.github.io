@@ -15,9 +15,9 @@
 <template>
   <div class="content">
     <Card class="card-1" @click="goToAbout"> About </Card>
-    <Card class="card-2" />
-    <Card class="card-3" />
-    <Card class="card-4" />
+    <Card class="card-2">Awesome components</Card>
+    <Card class="card-3">Technical stack</Card>
+    <Card class="card-4">Article</Card>
   </div>
 </template>
 
